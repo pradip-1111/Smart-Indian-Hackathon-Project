@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.13.1/css/all.css"
+      integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q"
+      crossorigin="anonymous"
+    />
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">-->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+      crossorigin="anonymous"
+    />
+    <!--<link rel="stylesheet" href="css/theme.css" />-->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/table.css" />
+    <link rel="stylesheet" href="css/load_page_animation.css" />
+    <title>Ground Water DashBoard</title>
+  </head>
+  <body onload="fetchfiles();">
+    <!-- NAVBAR -->
+    <nav
+      class="navbar navbar-expand-lg bg-dark navbar-dark py-3"
+      id="mainNavbar"
+    >
+      <div class="container">
+        <a href="index.html" class="navbar-brand display-5">
+          <b>Groundwater Dashboard</b>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarLinks"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarLinks">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a
+                href="index.html"
+                style="
+                  background-color: white;
+                  color: black;
+                  font-weight: 600;
+                  border-radius: 8px;
+                  margin: 2px;
+                "
+                class="nav-link active"
+                >Home</a
+              >
+              <!--MAIN DESIGN-->
+            </li>
+            <li class="nav-item">
+              <a
+                href="compare.html"
+                style="border-radius: 8px; margin: 2px;"
+                id="navbar_element"
+                class="nav-link"
+                >Compare</a
+              >
+              <!--SOME GRAPHS-->
+            </li>
+            <li class="nav-item">
+              <a
+                href="compareGWRA.html"
+                style="border-radius: 8px; margin: 2px;"
+                id="navbar_element"
+                class="nav-link"
+                >Compare GWRA</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                href="getAPI.html"
+                style="border-radius: 8px; margin: 2px;"
+                id="navbar_element"
+                class="nav-link"
+                >Get API</a
+              >
+              <!--FORM THAT WILL LINK TO GIT RAW-->
+            </li>
+            <li class="nav-item">
+              <a
+                href="3D.html"
+                style="border-radius: 8px; margin: 2px;"
+                id="navbar_element"
+                class="nav-link"
+                >3D View</a
+              >
+              <!--KEPLER-->
+            </li>
+            <li>
+              <div class="nav-link">
+                <div id="google_translate_element"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!--HOME SECTION-->
+    <section id="home" class="main_content">
+      <div class="container">
+        <div class="row mt-5">
+          <!--LEFT SIDE HOME-->
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-body mb-3 shadow-sm">
+              <h4 class="text-center mb-1">
+                <b>Search State/District/Block</b>
+              </h4>
+              <div class="input-group shadow-sm mt-4" style="height: 50px;">
+                <input
+                  id="myInput"
+                  class="form-control"
+                  type="text"
+                  name="search"
+                  placeholder="Search ..."
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-outline-secondary"
+                    id="searchBtn"
+                    onclick="searchClick(this.id)"
+                  >
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!--DATE HANDLING FORM-->
+
+              <div class="row my-4 text-center">
+                <div class="col-6 p-1">
+                  <div class="">
+                    <div class="card-title lead"><b>Year</b></div>
+                    <select
+                      name="year"
+                      id="yearSelect"
+                      class="form-control"
+                      onclick="changeYear(this.value);"
+                    >
+                      <option value="2018">2023</option>
+                      <option value="2018">2022</option>
+                      <option value="2018">2021</option>
+                      <option value="2018">2020</option>
+                      <option value="2018">2019</option>
+                      <option value="2018">2018</option>
+                      <option value="2017">2017</option>
+                      <option value="2016">2016</option>
+                      <option value="2015">2015</option>
+                      <option value="2014">2014</option>
+                      <option value="2013">2013</option>
+                      <option value="2012">2012</option>
+                      <option value="2011">2011</option>
+                      <option value="2010">2010</option>
+                      <option value="2009">2009</option>
+                      <option value="2008">2008</option>
+                      <option value="2007">2007</option>
+                      <option value="2006">2006</option>
+                      <option value="2005">2005</option>
+                      <option value="2004">2004</option>
+                      <option value="2003">2003</option>
+                      <option value="2002">2002</option>
+                      <option value="2001">2001</option>
+                      <option value="2000">2000</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-6 p-1">
+                  <div class="">
+                    <div class="card-title lead">
+                      <b>Season</b>
+                    </div>
+                    <select
+                      name="season"
+                      id="seasonSelect"
+                      class="form-control"
+                      onclick="changeSeason(this.id)"
+                    >
+                      <option value="88" id="POMRB">POMRB</option>
+                      <option value="89" id="PREMON">PREMON</option>
+                      <option value="90" id="MONSOON">MONSOON</option>
+                      <option value="91" id="POMKH" selected>POMKH</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                
+              </div>
+              <div class="row text-center my-2">
+                <h5 id="checkError" class="mx-auto"></h5>
+              </div>
+              <div class="row my-2">
+                
+              </div>
+            </div>
+            <!--CURRENT MASTER LOCATION STATS CARD GROUP-->
+            <div class="row text-center no-gutters">
+              <div class="col-6 pl-2">
+                <div class="mb-2 card text-success card-body shadow-sm">
+                  <h6>
+                    <b>Improving<br /><span class="level">States</span></b>
+                  </h6>
+                  <h6 class="font-weight-bold">
+                    <span class="improvingRegions"></span>
+                  </h6>
+                </div>
+              </div>
+              <div class="col-6 pl-2">
+                <div class="mb-2 card card-body text-danger shadow-sm">
+                  <h6>
+                    <b>Declining<br /><span class="level">States</span></b>
+                  </h6>
+                  <h6 class="font-weight-bold">
+                    <span class="decliningRegions"></span>
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+            <!--TABLE STARTS HERE-->
+            <div id="tableSection" class="mt-3">
+              <div
+                class="container card card-body shadow-sm"
+                style="padding-right: 0%; padding-left: 0%;"
+              >
+                <div class="table-responsive">
+                  <table class="table fadeInUp" style="overflow-x: scroll;">
+                    <thead>
+                      <tr>
+                        <th
+                          data-column="State"
+                          data-order="desc"
+                          class="state-heading"
+                          id="Heading"
+                        >
+                          <div class="heading-content">
+                            <abbr class="s-name" title="State">State/UT</abbr>
+                          </div>
+                        </th>
+                        <th
+                          data-column="IncreasingDistricts"
+                          data-order="desc"
+                          class="state-heading"
+                        >
+                          <div class="heading-content">
+                            <abbr class="s-imp" title="Improving Disrticts"
+                              >Improving Districts</abbr
+                            >
+                          </div>
+                        </th>
+                        <th
+                          data-column="DecreasingDistricts"
+                          data-order="desc"
+                          class="state-heading"
+                        >
+                          <div class="heading-content">
+                            <abbr class="s-dec" title="Declining Disrticts"
+                              >Declining Districts</abbr
+                            >
+                          </div>
+                        </th>
+                        <th
+                          data-column="Current Level"
+                          data-order="desc"
+                          class="state-heading"
+                        >
+                          <div class="heading-content">
+                            <abbr class="s-avg" title="Average Level"
+                              >Current Level</abbr
+                            >
+                          </div>
+                        </th>
+                        <th
+                          data-column="Algorithm Level"
+                          data-order="desc"
+                          class="state-heading"
+                        >
+                          <div class="heading-content">
+                            <abbr class="s-algo" title="Minimum Level"
+                              >Algorithm Level</abbr
+                            >
+                          </div>
+                        </th>
+                        <th
+                          data-column="Status"
+                          data-order="desc"
+                          class="state-heading"
+                        >
+                          <div class="heading-content">
+                            <abbr class="s-algo">Status</abbr>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="myTable" style="overflow-x: visible;"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!--TABLE ENDS HERE-->
+          </div>
+
+          <!--RIGHT SIDE HOME-->
+          <div class="col-md-6 col-sm-12">
+            <!--MAP STARTS HERE-->
+            <!--MAP CONTAINER WITH BACK BUTTON-->
+            <div class="card shadow">
+              <div class="card-header">
+                <h3 class="text-secondary text-center" id="locName"></h3>
+                <p id="periodName1" class="h5 text-center text-muted"></p>
+                <h6 class="text-center">
+                  <b>Click on States/UTs for more details.</b>
+                </h6>
+                <button
+                  class="btn btn-outline-primary"
+                  hidden
+                  id="mapBackBtn"
+                  onclick="rollUp();"
+                >
+                  BACK
+                </button>
+              </div>
+              <div id="mapContainer" class="card-body responsive"></div>
+              <div class="card-footer d-flex justify-content-center">
+                <img src="img/legend.png" alt="" />
+              </div>
+            </div>
+            <p class="h5 text-center mt-4">Union Territories</p>
+            <div class="btn-group d-flex justify-content-center">
+              <button
+                class="btn btn-outline-warning"
+                type="button"
+                id="PY"
+                onclick="districtView(this.id);"
+              >
+                Pondicherry
+              </button>
+              <button
+                class="btn btn-outline-warning"
+                type="button"
+                id="DD"
+                onclick="districtView(this.id);"
+              >
+                Daman&Diu
+              </button>
+              <button
+                class="btn btn-outline-warning"
+                type="button"
+                id="CH"
+                onclick="districtView(this.id);"
+              >
+                Chandigarh
+              </button>
+            </div>
+            <!--END OF MAP CONTAINER-->
+            <!--MAP ENDS HERE-->
+
+            <p class="text-muted text-center h3 mt-3">Trend</p>
+            <!--TREND GRAPH-->
+            <div
+              class="container mt-3"
+              style="border: 1px solid white; height: 200px;"
+              id="graph0"
+            ></div>
+
+            <p class="text-muted text-center h3 mt-3">Algorithm</p>
+            <!--GRAPHS START HERE-->
+
+            <!--ALL SEASONS GRAPH-->
+            <div
+              class="container mt-3"
+              style="border: 1px solid white; height: 200px;"
+              id="graph1"
+            ></div>
+
+            <!--POMRB GRAPH-->
+            <div
+              class="container mt-3"
+              style="border: 1px solid white; height: 200px;"
+              id="graph2"
+            ></div>
+
+            <!--PREMON GRAPH-->
+            <div
+              class="container mt-3"
+              style="border: 1px solid white; height: 200px;"
+              id="graph3"
+            ></div>
+
+            <!--MONSOON GRAPH-->
+            <div
+              class="container mt-3"
+              style="border: 1px solid white; height: 200px;"
+              id="graph4"
+            ></div>
+
+            <!--POMKH GRAPH-->
+            <div
+              class="container mt-3"
+              style="border: 1px solid white; height: 200px;"
+              id="graph5"
+            ></div>
+
+            <!--GRAPHS END HERE-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 offset-md-4 mt-5">
+            <div class="btn btn-warning btn-lg btn-block" onclick="print();">
+              <span><i class="fa fa-print"></i> Print Report</span>
+            </div>
+            <button
+              class="btn btn-light mt-3"
+              data-toggle="modal"
+              data-target="#detailsModal"
+            >
+              Test Modal
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Details MODAL -->
+    <div class="modal" id="detailsModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Login</h5>
+            <button class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  class="form-control"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--FOOTER-->
+    <footer id="main-footer" class="py-5 bg-light mb-0 bg-dark text-white mt-5">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-md-6 mx-auto">
+            <p class="display-4">
+              The Yodhas
+              <p>Copyright</p>
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- DO NOT USE SLIM VERSION OF JQUERY -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+      integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+      crossorigin="anonymous"
+    ></script>
+    <script src="scripts/dropdown.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script>
+      // GLOBAL VARIABLES
+      var year = 2018;
+      var loc = 'INDIA';
+      var docIdx = 91;
+      var algo = 'TES';
+      var level = 0;
+      var improvingRegionCount = 0;
+      var decliningRegionCount = 0;
+
+      // Index dictionary for years
+      var idxDict = {
+        2000: [0, 1, 2, 3],
+        2001: [4, 5, 6, 7],
+        2002: [8, 9, 10, 11],
+        2003: [12, 13, 14, 15],
+        2004: [16, 17, 18, 19],
+        2005: [20, 21, 22, 23],
+        2006: [24, 25, 26, 27],
+        2007: [28, 29, 30, 31],
+        2008: [32, 33, 34, 35],
+        2009: [36, 37, 38, 39],
+        2010: [40, 41, 42, 43],
+        2011: [44, 45, 46, 47],
+        2012: [48, 49, 50, 51],
+        2013: [52, 53, 54, 55],
+        2014: [56, 57, 58, 59],
+        2015: [60, 61, 62, 63],
+        2016: [64, 65, 66, 67],
+        2017: [68, 69, 70, 71],
+        2018: [72, 73, 74, 75],
+        2019: [76, 77, 78, 79],
+        2020: [80, 81, 82, 83],
+        2021: [84, 85, 86, 87],
+        2022: [88, 89, 90, 91],
+        2023: [92, 93, 94, 95],
+      };
+
+      var state_code = {
+        JK: 'Jammu & Kashmir',
+        HP: 'Himachal Pradesh',
+        PB: 'Punjab',
+        CH: 'Chandigarh',
+        UK: 'Uttarakhand',
+        HR: 'Haryana',
+        DL: 'Delhi',
+        RJ: 'Rajasthan',
+        UP: 'Uttar Pradesh',
+        BR: 'Bihar',
+        SIKKIM: 'Sikkim',
+        AR: 'Arunachal Pradesh',
+        NL: 'Nagaland',
+        MN: 'Manipur',
+        MIZORAM: 'Mizoram',
+        TR: 'Tripura',
+        ML: 'Meghalaya',
+        AS: 'Assam',
+        WB: 'West Bengal',
+        JH: 'Jharkhand',
+        OD: 'Odisha',
+        CG: 'Chhattisgarh',
+        MP: 'Madhya Pradesh',
+        GJ: 'Gujarat',
+        DD: 'Daman & Diu',
+        MS: 'Maharashtra',
+        AP: 'Andhra Pradesh',
+        KA: 'Karnataka',
+        GA: 'Goa',
+        KL: 'Kerala',
+        TN: 'Tamil Nadu',
+        PY: 'Pudducherry',
+        AN: 'Andaman & Nicobar Islands',
+        TG: 'Telengana',
+        INDIA: 'INDIA',
+      };
+
+      /*************START FUNCTIONS THAT ARE SET TO RUN ON SITE LOAD********************/
+      document.getElementById('locName').innerHTML = state_code[loc] + ' Map';
+      //document.getElementById('backBtnMap').style.display = 'None';
+
+      function fetchfiles() {
+        changeToLoc('INDIA');
+        labelMap();
+      }
+      /*************END FUNCTIONS THAT ARE SET TO RUN ON SITE LOAD********************/
+
+      /*****START FUNCTIONS FOR CHANGING LOCATION IE. DOWNLOADING NEW FILES****/
+      //FILE VARIABLES WITH DATA
+      var mapFileData = null;
+      var tableFileData = null;
+      var locFileData = null;
+      var graphFileData = null;
+      function rollUp() {
+        level = 0;
+        loc = 'INDIA';
+        changeToLoc(loc);
+        document.getElementById('mapBackBtn').hidden = false;
+        var spans = document.getElementsByClassName('level');
+        for (var i = 0; i < spans.length; i++) {
+          spans[i].innerHTML = 'States';
+        }
+        document.getElementById('mapBackBtn').hidden = true;
+      }
+
+      function districtView(id) {
+        document.getElementById('checkError').innerText = '';
+        if (level == 0) {
+          level = 1;
+          document.getElementsByClassName('level').innerHTML = 'Districts';
+          document.getElementById('mapBackBtn').hidden = false;
+          var spans = document.getElementsByClassName('level');
+          for (var i = 0; i < spans.length; i++) {
+            spans[i].innerHTML = 'Districts';
+          }
+          changeToLoc(id);
+        } else {
+          //Handle clicks on districts
+        }
+      }
+
+      // Will execute on clicking state on the map
+      function changeToLoc(id) {
+        mapFileData = null;
+        tableFileData = null;
+        locFileData = null;
+        graphFileData = null;
+        loc = id;
+        document.getElementById('locName').innerHTML = state_code[loc] + ' Map';
+        loadMapData();
+        loadNormalData();
+        loadGraphData();
+        loadTableData();
+      }
+
+      //DOWNLOAD NORMAL JSON
+      function loadNormalData() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            locFileData = this.responseText;
+            setTimeout(function () {
+              processJSON();
+            }, 5000);
+          }
+        };
+        if (loc == 'INDIA') {
+          xhttp.open('GET', 'data/' + loc + '.json', true);
+        } else {
+          xhttp.open(
+            'GET',
+            'data/DISTRICTDATA/JSON/DISTRICTWISE_' + loc + '.json',
+            true
+          );
+        }
+        xhttp.send();
+        //Write Load new map function here
+      }
+
+      //DOWNLOAD MAP
+      function loadMapData() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            mapFileData = this.responseText;
+            document.getElementById('mapContainer').innerHTML = mapFileData;
+          }
+        };
+        xhttp.open('GET', 'maps/' + loc + '.svg', true);
+        xhttp.send();
+        //Write Load new map function here
+      }
+
+      //DOWNLOAD TABLES
+      function loadTableData() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            tableFileData = this.responseText;
+            setTimeout(function () {
+              buildtable();
+            }, 5000);
+          }
+        };
+        if (loc == 'INDIA') {
+          //xhttp.open('GET', 'table_data/' + loc + '.json', true);
+          xhttp.open('GET', 'table_data/TABLE_DATA_' + algo + '.json', true);
+        } else {
+          xhttp.open(
+            'GET',
+            'table_data/STATEWISE-' + algo + '/TABLE_DATA_' + loc + '.json',
+            true
+          );
+        }
+
+        xhttp.send();
+        //Write Load Table function here
+      }
+
+      //Download graphs
+      function loadGraphData() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            graphFileData = this.responseText;
+            setTimeout(function () {
+              graphUpdate();
+            }, 5000);
+          }
+        };
+        if (loc == 'INDIA') {
+          xhttp.open('GET', 'data/Total-India.json', true);
+        } else if (state_code.hasOwnProperty(loc)) {
+          xhttp.open('GET', 'data/INDIA.json', true);
+        } else {
+          xhttp.open(
+            'GET',
+            'data/DISTRICTDATA/JSON/DISTRICTWISE_' + loc + '.json',
+            true
+          );
+        }
+        xhttp.send();
+        //Write Load new graph function here
+      }
+
+      function graphUpdate() {
+        //Write graph updation code here
+        graph_data = JSON.parse(graphFileData);
+        buildGraphData();
+       
+        for (var i = 0; i < 4; i++) {
+            chart1.options.data[i].dataPoints = [];
+          }
+          for (var i = 0; i < 2; i++) {
+            chart2.options.data[i].dataPoints = [];
+            chart3.options.data[i].dataPoints = [];
+            chart4.options.data[i].dataPoints = [];
+            chart5.options.data[i].dataPoints = [];
+          }
+      }
+
+      /*****END FUNCTIONS FOR CHANGING LOCATION IE. DOWNLOADING NEW FILES****/
+
+      /*****START FUNCTIONS FOR CHANGING THE INDEX OF THE DOWNLOADED DATA************/
+      function searchClick(id) {
+        var searchString = document.getElementById('searchText').value;
+        //console.log(searchString);
+        //Make Search operational
+      }
+
+      function labelMap() {
+        var periodText1 =
+          $('#yearSelect option:selected').text() +
+          ', ' +
+          $('#seasonSelect option:selected').text() +
+          ', ' +
+          $('#algoSelect option:selected').text();
+        document.getElementById('periodName1').innerHTML = periodText1;
+      }
+
+      function changeYear() {
+        var seasonIdxs =
+          idxDict[parseInt(document.getElementById('yearSelect').value)];
+        document.getElementById('POMRB').value = seasonIdxs[0];
+        document.getElementById('PREMON').value = seasonIdxs[1];
+        document.getElementById('MONSOON').value = seasonIdxs[2];
+        document.getElementById('POMKH').value = seasonIdxs[3];
+        docIdx = seasonIdxs[0];
+        document.getElementById('POMRB').selected = true;
+        document.getElementById('checkError').innerText = '';
+        labelMap();
+        processJSON();
+        buildtable();
+      }
+
+      function changeSeason(id) {
+        docIdx = document.getElementById('seasonSelect').value;
+        document.getElementById('checkError').innerText = '';
+        //console.log('docIdx=', docIdx);
+        labelMap();
+        processJSON();
+        //tableUpdate();
+        buildtable();
+      }
+
+      function changeAlgorithm() {
+        algo = document.getElementById('algoSelect').value;
+        document.getElementById('checkError').innerText = '';
+        labelMap();
+        loadTableData();
+        processJSON();
+        graphUpdate();
+        buildtable();
+      }
+
+      function mapUpdate() {
+        //Update map with new index
+      }
+
+      function tableUpdate() {
+        //Update table with new index
+        buildtable();
+      }
+      /*****END FUNCTIONS FOR CHANGING THE INDEX OF THE DOWNLOADED DATA************/
+
+      /*************** START SHWETA SECTION **********************/
+      //Tables
+
+      var seasons = {
+        POMRB: 0,
+        MONSOON: 1,
+        PREMON: 2,
+        POMKH: 3,
+      };
+
+      function buildtable() {
+        if (loc == 'INDIA') {
+          table_data = builddata();
+          buildTable(table_data);
+        } else {
+          table_data = buildDistrictData();
+          builddistrictTable(table_data);
+        }
+      }
+
+      //last column
+      function lastCol(n1, n2) {
+        if (n1 - n2 < 0) {
+          return 'Improving';
+        } else {
+          return 'Declining';
+        }
+      }
+
+      //Build data for State Table
+      function builddata() {
+        var i = 0;
+        var table_data = [];
+        var data = JSON.parse(tableFileData.replace(/\bNaN\b/g, 'null'));
+        for (i = 0; i < data.length; i++) {
+          var state_data = {};
+          var districts = [];
+          state_data.State = data[i].State;
+          state_data.CurrentLevel = data[i].CurrentLevel[docIdx];
+          state_data.AlgoLevel = data[i].AlgoLevel[docIdx];
+          state_data.IncreasingDistricts = data[i].IncreasingDistricts[docIdx];
+          state_data.DecreasingDistricts = data[i].DecreasingDistricts[docIdx];
+          for (var j = 0; j < data[i].districts.length; j++) {
+            var district_data = {};
+            district_data.district = data[i].districts[j].district;
+            district_data.CurrentLevel =
+              data[i].districts[j].CurrentLevel[docIdx];
+            district_data.AlgoLevel = data[i].districts[j].AlgoLevel[docIdx];
+            district_data.IncreasingBlocks =
+              data[i].districts[j].IncreasingBlocks[docIdx];
+            district_data.DecreasingBlocks =
+              data[i].districts[j].DecreasingBlocks[docIdx];
+            districts[j] = district_data;
+          }
+          state_data.districts = districts;
+          table_data[i] = state_data;
+        }
+        //  console.log(table_data)
+        return table_data;
+      }
+      //Build State Table
+      function buildTable(data) {
+        $('#Heading').attr('class', 'state-heading');
+        $('.s-name').text('State');
+        $('.s-imp').text('Improving Districts');
+        $('.s-dec').text('Declining Districts');
+        var table = document.getElementById('myTable');
+        table.innerHTML = '';
+        for (var i = 0; i < data.length; i++) {
+          var row = `<tr class="state-row ${i}">
+                      <td>
+                        <div class="title-chevron">
+                          <span class="dropdown rotateDownRight">
+                            <svg height="24" width="24" viewbox=" 0 0 24 24">
+                               <polyline points="6 9 12 15 18 9" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+                            </svg>
+                            </span>
+                        <span class ="title-icon" >${data[i].State}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="delta is-increasing"></span>
+                        <span class="total">${
+                          data[i].IncreasingDistricts
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-decreasing"></span>
+                        <span class="total">${
+                          data[i].DecreasingDistricts
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-avgLevel"></span>
+                        <span class="total">${
+                          Math.round(data[i].CurrentLevel * 100) / 100
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-minLevel"></span>
+                        <span class="total">${
+                          Math.round(data[i].AlgoLevel * 100) / 100
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-minLevel"></span>
+                        <span class="total">${lastCol(
+                          data[i].CurrentLevel,
+                          data[i].AlgoLevel
+                        )}</span>
+                      </td>
+                 </tr>
+                 <tr></tr>`;
+
+          table.innerHTML += row;
+        }
+        var row = `<tr class="is-spacer" style="display:none;">
+                <td colspan="4">
+                </td>
+              </tr>
+              <tr class="state-last-update" style="display:none;">
+                <td colspan="5" style="padding-bottom: 0px;">
+                </td>
+                <td align="center" class="state-page-link" colspan="1" style="width: 2.5rem;" style="padding-bottom:1rem;">
+                  See more details
+                </td>
+              </tr>
+              <tr class="districtHead" style="display:none;">
+              <td data-column="district" data-order="desc" class="district-heading">
+                <div class="heading-content">
+                    <abbr title="District">District</abbr>
+                </div>
+            </td>
+            <td data-column="IncreasingBlocks" data-order="desc" class="district-heading">
+                <div class="heading-content" >
+                    <abbr title="Increasing Blocks">Increasing Blocks</abbr>
+                </div>
+            </td>
+            <td data-column="DecreasingBlocks" data-order="desc" class="district-heading">
+                <div class="heading-content">
+                    <abbr title="Decreasing Blocks">Decreasing Blocks</abbr>
+                </div>
+            </td>
+            <td data-column="CurrentLevel" data-order="desc" class="district-heading">
+                <div class="heading-content">
+                    <abbr title="Current Level">Current Level</abbr>
+                </div>
+            </td>
+            <td data-column="AlgorithmLevel" data-order="desc" class="district-heading">
+              <div class="heading-content">
+                  <abbr title="Algorithm Level">Algorithm Level</abbr>
+              </div>
+            </td>
+            <td data-column="AlgorithmLevel" data-order="desc" class="district-heading">
+              <div class="heading-content">
+                  <abbr title="Status">Status</abbr>
+              </div>
+            </td>
+      </tr>`;
+        $('.state-row').after(row);
+
+        for (i = 0; i < data.length; i++) {
+          for (j = 0; j < data[i].districts.length; j++) {
+            var row = `<tr class="district-row ${i}" style="display:none;">
+                      <td>
+                        <div class="title-chevron">
+                          <span class ="title-icon">${
+                            data[i].districts[j].district
+                          }</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="delta is-increasing"></span>
+                        <span class="total">${
+                          data[i].districts[j].IncreasingBlocks
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-decreasing"></span>
+                        <span class="total">${
+                          data[i].districts[j].DecreasingBlocks
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-avgLevel"></span>
+                        <span class="total">${
+                          Math.round(data[i].districts[j].CurrentLevel * 100) /
+                          100
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-minLevel"></span>
+                        <span class="total">${
+                          Math.round(data[i].districts[j].AlgoLevel * 100) / 100
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-minLevel"></span>
+                        <span class="total">${lastCol(
+                          data[i].districts[j].CurrentLevel,
+                          data[i].districts[j].AlgoLevel
+                        )}</span>
+                      </td>
+                 </tr>`;
+            var dist = $('.districtHead')[i];
+            $(dist).after(row);
+          }
+        }
+      }
+
+      //State sorting
+      $(document).on('click', '.state-heading', function () {
+        var column = $(this).data('column');
+        var order = $(this).data('order');
+        var text = $(this).html();
+        text = text.substring(0, text.length - 1);
+        if (order == 'desc') {
+          $(this).data('order', 'asc');
+          table_data = table_data.sort((a, b) =>
+            a[column] > b[column] ? 1 : -1
+          );
+          text += '&#9660';
+        } else {
+          $(this).data('order', 'desc');
+          table_data = table_data.sort((a, b) =>
+            a[column] < b[column] ? 1 : -1
+          );
+          text += '&#9650';
+        }
+        $(this).html(text);
+        buildTable(table_data);
+      });
+
+      //Disrtict dropdown
+      $(document).ready(function () {
+        $(document).on('click', '.state-row', function () {
+          $(this).nextUntil('tr.state-row').slideToggle(200);
+          $(this).find('span:first').toggleClass('rotateDownRight');
+        });
+      });
+
+      //District sorting
+
+      $(document).on('click', 'td.district-heading', function () {
+        var x = $(this).parent().next().attr('class');
+        var stateIndex = x.split(' ');
+        var index = stateIndex[1];
+        var column = $(this).data('column');
+        var order = $(this).data('order');
+        var text = $(this).html();
+        text = text.substring(0, text.length - 1);
+        if (order == 'desc') {
+          $(this).data('order', 'asc');
+
+          table_data[index].districts = table_data[
+            index
+          ].districts.sort((a, b) => (a[column] > b[column] ? 1 : -1));
+          text += '        &#9660';
+        } else {
+          $(this).data('order', 'desc');
+          table_data[index].districts = table_data[
+            index
+          ].districts.sort((a, b) => (a[column] < b[column] ? 1 : -1));
+          text += '&#9650';
+        }
+
+        $(this).html(text);
+
+        var table1 = $(this).parent();
+        buildDistrictTable(table1, index);
+      });
+      //Build District Tables after sorting
+      function buildDistrictTable(table, index) {
+        $(`.district-row.${index}`).remove();
+        for (var i = 0; i < table_data[index].districts.length; i++) {
+          var row = `<tr class="district-row ${index}">
+                      <td>
+                        <div class="title-chevron">
+                        <span class ="title-icon">${
+                          table_data[index].districts[i].district
+                        }</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="delta is-increasing"></span>
+                        <span class="total">${
+                          table_data[index].districts[i].IncreasingBlocks
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-decreasing"></span>
+                        <span class="total">${
+                          table_data[index].districts[i].DecreasingBlocks
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-avgLevel"></span>
+                        <span class="total">${
+                          Math.round(
+                            table_data[index].districts[i].CurrentLevel * 100
+                          ) / 100
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-minLevel"></span>
+                        <span class="total">${
+                          Math.round(
+                            table_data[index].districts[i].AlgoLevel * 100
+                          ) / 100
+                        }</span>
+                      </td>
+                      <td>
+                        <span class="delta is-minLevel"></span>
+                        <span class="total">${lastCol(
+                          table_data[index].districts[i].CurrentLevel,
+                          table_data[index].districts[i].AlgoLevel
+                        )}</span>
+                      </td>
+
+
+                 </tr>`;
+          var appendRow = $(`.state-row.${index}`).next().next();
+
+          appendRow.after(row).app;
+        }
+      }
+
+      //Tables for each state
+
+      //Build Table Data for districts and blocks
+      function buildDistrictData() {
+        var data = JSON.parse(tableFileData.replace(/\bNaN\b/g, 'null'));
+        var i = 0;
+        var table_data = [];
+        for (i = 0; i < data.length; i++) {
+          var district_data = {};
+          var blocks = [];
+          district_data.District = data[i].District;
+          district_data.CurrentLevel = data[i].CurrentLevel[docIdx];
+          district_data.AlgoLevel = data[i].AlgoLevel[docIdx];
+          district_data.IncreasingBlocks = data[i].IncreasingBlocks[docIdx];
+          district_data.DecreasingBlocks = data[i].DecreasingBlocks[docIdx];
+          for (var j = 0; j < data[i].blocks.length; j++) {
+            var block_data = {};
+            block_data.block = data[i].blocks[j].Block;
+            block_data.CurrentLevel = data[i].blocks[j].CurrentLevel[docIdx];
+            block_data.AlgoLevel = data[i].blocks[j].AlgoLevel[docIdx];
+            blocks[j] = block_data;
+          }
+          district_data.blocks = blocks;
+          table_data[i] = district_data;
+        }
+        //  console.log(table_data)
+        return table_data;
+      }
+
+      //District sorting
+
+      $(document).on('click', '.district-Heading', function () {
+        var column = $(this).data('column');
+        var order = $(this).data('order');
+        var text = $(this).html();
+        text = text.substring(0, text.length - 1);
+        if (order == 'desc') {
+          $(this).data('order', 'asc');
+          table_data = table_data.sort((a, b) =>
+            a[column] > b[column] ? 1 : -1
+          );
+          text += '&#9660';
+        } else {
+          $(this).data('order', 'desc');
+          table_data = table_data.sort((a, b) =>
+            a[column] < b[column] ? 1 : -1
+          );
+          text += '&#9650';
+        }
+        $(this).html(text);
+        builddistrictTable(table_data);
+      });
+
+      //Build district table
+      function builddistrictTable(data) {
+        $('.state-heading').attr('class', 'district-Heading');
+        $('.s-name').text('District');
+        $('.s-imp').text('Improving Blocks');
+        $('.s-dec').text('Declining Blocks');
+
+        var table = document.getElementById('myTable');
+        table.innerHTML = '';
+        var odd;
+        for (var i = 0; i < data.length; i++) {
+          if (i % 2 == 0) odd = 'odd';
+          else odd = '';
+          var row = `<tr class="districtRow ${i}" id ="${odd}">
+                          <td>
+                            <div class="title-chevron">
+                              <span class="dropdown rotateDownRight">
+                                <svg height="24" width="24" viewbox=" 0 0 24 24">
+                                   <polyline points="6 9 12 15 18 9" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+                                </svg>
+                                </span>
+                            <span class ="title-icon" >${
+                              data[i].District
+                            }</span>
+                            </div>
+                          </td>
+                          <td>
+                            <span class="delta is-increasing"></span>
+                            <span class="total">${
+                              data[i].IncreasingBlocks
+                            }</span>
+                          </td>
+                          <td>
+                            <span class="delta is-decreasing"></span>
+                            <span class="total">${
+                              data[i].DecreasingBlocks
+                            }</span>
+                          </td>
+                          <td>
+                            <span class="delta is-avgLevel"></span>
+                            <span class="total">${
+                              Math.round(data[i].CurrentLevel * 100) / 100
+                            }</span>
+                          </td>
+                          <td>
+                            <span class="delta is-minLevel"></span>
+                            <span class="total">${
+                              Math.round(data[i].AlgoLevel * 100) / 100
+                            }</span>
+                          </td>
+                          <td>
+                            <span class="delta is-minLevel"></span>
+                            <span class="total">${lastCol(
+                              data[i].CurrentLevel,
+                              data[i].AlgoLevel
+                            )}</span>
+                          </td>
+                     </tr>`;
+
+          table.innerHTML += row;
+        }
+
+        //Add block Heading
+        var row = `
+                  <tr class="state-last-update" style="display:none;">
+                    <td colspan="5" style="padding-bottom: 0px;">
+                    </td>
+                    <td align="center" class="state-page-link" colspan="1" style="width: 2.5rem;" style="padding-bottom:1rem;">
+                      See more details
+                    </td>
+                  </tr>
+
+                  <tr class="blockHead" style="display:none;">
+                  <td data-column="district" data-order="desc" class="block-heading" colsplan="1">
+                    <div class="heading-content">
+                        <abbr title="District">Block</abbr>
+                    </div>
+                </td>
+                <td data-column="CurrentLevel" data-order="desc" class="block-heading" colspan="2">
+                    <div class="heading-content">
+                        <abbr title="Current Level">Current Level</abbr>
+                    </div>
+
+                </td>
+                <td data-column="AlgorithmLevel" data-order="desc" class="block-heading" colspan="2">
+                  <div class="heading-content">
+                      <abbr title="Algorithm Level">Algorithm Level</abbr>
+                  </div>
+
+              </td>
+              <td data-column="AlgorithmLevel" data-order="desc" class="block-heading" colspan="1">
+                  <div class="heading-content">
+                      <abbr title="">Status</abbr>
+                  </div>
+
+              </td>
+
+            </td>
+          </tr>`;
+        $('.districtRow').after(row);
+        //Add block rows
+        for (i = 0; i < data.length; i++) {
+          for (j = 0; j < data[i].blocks.length; j++) {
+            var row = `<tr class="block-row ${i}" style="display:none;">
+                          <td colspan="1">
+                            <div class="title-chevron">
+                              <span class ="title-icon">${
+                                data[i].blocks[j].block
+                              }</span>
+                            </div>
+                          </td>
+                          <td colspan="2">
+                            <span class="delta is-avgLevel"></span>
+                            <span class="total">${
+                              Math.round(data[i].blocks[j].CurrentLevel * 100) /
+                              100
+                            }</span>
+                          </td>
+                          <td colspan="2">
+                            <span class="delta is-minLevel"></span>
+                            <span class="total">${
+                              Math.round(data[i].blocks[j].AlgoLevel * 100) /
+                              100
+                            }</span>
+                          </td>
+                          <td colspan="1">
+                            <span class="delta is-minLevel"></span>
+                            <span class="total">${lastCol(
+                              data[i].blocks[j].CurrentLevel,
+                              data[i].blocks[j].AlgoLevel
+                            )}</span>
+                          </td>
+                     </tr>`;
+            var dist = $('.blockHead')[i];
+            $(dist).after(row);
+          }
+        }
+      }
+
+      //Block dropdown
+      $(document).ready(function () {
+        $(document).on('click', '.districtRow', function () {
+          $(this).nextUntil('tr.districtRow').slideToggle(200);
+          $(this).find('span:first').toggleClass('rotateDownRight');
+        });
+      });
+
+      //Blocks sorting
+
+      $(document).on('click', 'td.block-heading', function () {
+        var x = $(this).parent().next().attr('class');
+        var stateIndex = x.split(' ');
+        var index = stateIndex[1];
+        var column = $(this).data('column');
+        var order = $(this).data('order');
+        var text = $(this).html();
+        text = text.substring(0, text.length - 1);
+        if (order == 'desc') {
+          $(this).data('order', 'asc');
+
+          table_data[index].blocks = table_data[index].blocks.sort((a, b) =>
+            a[column] > b[column] ? 1 : -1
+          );
+          text += '        &#9660';
+        } else {
+          $(this).data('order', 'desc');
+          table_data[index].blocks = table_data[index].blocks.sort((a, b) =>
+            a[column] < b[column] ? 1 : -1
+          );
+          text += '&#9650';
+        }
+
+        $(this).html(text);
+
+        var table2 = $(this).parent();
+        buildBlockTable(table2, index);
+      });
+
+      //Build block table after sorting
+      function buildBlockTable(table, index) {
+        $(`.block-row.${index}`).remove();
+        for (var i = 0; i < table_data[index].blocks.length; i++) {
+          var row = `<tr class="block-row ${index}">
+                          <td colspan="1">
+                            <div class="title-chevron">
+                            <span class ="title-icon">${
+                              table_data[index].blocks[i].block
+                            }</span>
+                            </div>
+                          </td>
+                          <td colspan="2">
+                            <span class="delta is-avgLevel"></span>
+                            <span class="total">${
+                              Math.round(
+                                table_data[index].blocks[i].CurrentLevel * 100
+                              ) / 100
+                            }</span>
+                          </td>
+                          <td colspan="2">
+                            <span class="delta is-minLevel"></span>
+                            <span class="total">${
+                              Math.round(
+                                table_data[index].blocks[i].AlgoLevel * 100
+                              ) / 100
+                            }</span>
+                          </td>
+                          <td colspan="1">
+                            <span class="delta is-minLevel"></span>
+                            <span class="total">${lastCol(
+                              table_data[index].blocks[i].CurrentLevel,
+                              table_data[index].blocks[i].AlgoLevel
+                            )}</span>
+                          </td>
+                          </tr>`;
+          var appendRow = $(`.districtRow.${index}`).next().next();
+          appendRow.after(row).app;
+        }
+      }
+
+           //Graphs section
+
+     function buildGraphData() {
+        var graphDataPOMRB = [];
+        var graphDataPREMON = [];
+        var graphDataMONSOON = [];
+        var graphDataPOMKH = []; 
+        var AllSeason = [];
+        var AllSeasonAlgo =[];
+        var AllSeasonTrends = [];
+        var locAlgo = loc.concat('_', algo);
+        var locTrend = loc.concat('_Trend');
+        var POMRB_IDX = [];
+        var PREMON_IDX = [];
+        var MONSOON_IDX = [];
+        var POMKH_IDX = [];
+
+        Object.keys(idxDict).forEach(function (key) {
+          POMRB_IDX.push(idxDict[key][0]);
+          PREMON_IDX.push(idxDict[key][1]);
+          MONSOON_IDX.push(idxDict[key][2]);
+          POMKH_IDX.push(idxDict[key][3]);
+        });
+        var j = 0
+        var z = 0
+        if(algo == "ARIMA"){
+            j = 1
+            z = 4
+        }
+       for (i = j; i < POMRB_IDX.length; i++) {
+          graphDataPOMRB.push({
+            x: graph_data.Date[POMRB_IDX[i]],
+            y1: graph_data[loc][POMRB_IDX[i]],
+            z: graph_data.Season[POMRB_IDX[i]],
+            y2: graph_data[locAlgo][POMRB_IDX[i]]
+          });
+          graphDataPREMON.push({
+            x: graph_data.Date[PREMON_IDX[i]],
+            y1: graph_data[loc][PREMON_IDX[i]],
+            y2: graph_data[locAlgo][PREMON_IDX[i]],
+            z: graph_data.Season[PREMON_IDX[i]],
+          });
+          graphDataMONSOON.push({
+            x: graph_data.Date[MONSOON_IDX[i]],
+            y1: graph_data[loc][MONSOON_IDX[i]],
+            y2: graph_data[locAlgo][MONSOON_IDX[i]],
+            z: graph_data.Season[MONSOON_IDX[i]],
+          });
+          graphDataPOMKH.push({
+            x:  graph_data.Date[POMKH_IDX[i]],
+            y1: graph_data[loc][POMKH_IDX[i]],
+            y2: graph_data[locAlgo][POMKH_IDX[i]],
+            z: graph_data.Season[POMKH_IDX[i]],
+          });
+        }
+        for (var i = z;i<92;i++){
+          AllSeason.push({
+            x: graph_data.Date[i],
+            y1: graph_data[loc][i],
+            y2: graph_data[locAlgo][i],
+            z:graph_data.Season[i]
+          })
+        }
+
+        for (var i = z;i<92;i++){
+          AllSeasonTrends.push({
+            x: graph_data.Date[i],
+            y1: graph_data[loc][i],
+            y2: graph_data[locTrend][i],
+            z:graph_data.Season[i]
+          })
+        }
+        
+        console.log(AllSeason)
+
+        am4core.ready(function(){
+          am4core.useTheme(am4themes_animated);
+          var chart0 = am4core.create("graph0", am4charts.XYChart);
+          chart0.exporting.menu = new am4core.ExportMenu();
+          var data = AllSeasonTrends;
+          var title = chart0.titles.create();
+          title.text = "Trend";
+          title.fontSize = 15;
+          title.fontWeight = 600  
+          title.marginBottom = 0;
+          /*Legend*/
+          chart0.legend = new am4charts.Legend();
+         // chart.legend.useDefaultMarker = true;
+         chart0.legend.maxHeight = 10;
+          var marker = chart0.legend.markers.template.children.getIndex(0);
+          marker.cornerRadius(7, 7, 7, 7);
+          marker.strokeWidth = 2;
+          marker.strokeOpacity = 1;
+          marker.stroke = am4core.color("#ccc");
+
+          /* Create axes */
+          var categoryAxis = chart0.xAxes.push(new am4charts.CategoryAxis());
+          categoryAxis.dataFields.category = "x";
+          categoryAxis.renderer.minGridDistance = 100;
+
+          /* Create value axis */
+          var valueAxis = chart0.yAxes.push(new am4charts.ValueAxis());
+
+
+          /* Create series */
+          var columnSeries = chart0.series.push(new am4charts.ColumnSeries());
+          columnSeries.name = "Original";
+          columnSeries.dataFields.valueY = "y1";
+          columnSeries.dataFields.categoryX = "x";
+          columnSeries.dataFields.valueZ = "z";
+
+          columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Origial Data:{valueY}[/] [#fff]{additional}[/]\n[/][#fff font-size: 15px]Season:{valueZ}[/] [#fff]{additional}[/]"
+          columnSeries.columns.template.propertyFields.fillOpacity = "fillOpacity";
+          columnSeries.columns.template.propertyFields.stroke = "stroke";
+          columnSeries.columns.template.propertyFields.strokeWidth = "strokeWidth";
+          columnSeries.columns.template.propertyFields.strokeDasharray = "columnDash";
+          columnSeries.tooltip.label.textAlign = "middle";
+
+          var lineSeries = chart0.series.push(new am4charts.LineSeries());
+          lineSeries.name = "Trend";
+          lineSeries.dataFields.valueY = "y2";
+          lineSeries.dataFields.categoryX = "x";
+          lineSeries.dataFields.valueZ = "z";
+
+          lineSeries.stroke = am4core.color("#fdd400");
+          lineSeries.strokeWidth = 1;
+          lineSeries.propertyFields.strokeDasharray = "lineDash";
+          lineSeries.tooltip.label.textAlign = "middle";
+
+          var bullet = lineSeries.bullets.push(new am4charts.Bullet());
+          bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+          bullet.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Trend Data:{valueY}[/] [#fff]{additional}[/]\n[/][#fff font-size: 15px]Season:{valueZ}[/] [#fff]{additional}[/]"
+          var circle = bullet.createChild(am4core.Circle);
+          circle.radius = 2;
+          circle.fill = am4core.color("#fff");
+          circle.strokeWidth = 2;
+
+          chart0.data =  AllSeasonTrends;
+
+          //Chart 1
+
+          var chart1 = am4core.create("graph1", am4charts.XYChart);
+          chart1.exporting.menu = new am4core.ExportMenu();
+          var data = AllSeason;
+          /*Legend*/
+
+          var title = chart1.titles.create();
+          title.text = "All Seasons";
+          title.fontSize = 15;
+          title.fontWeight = 600  
+          title.marginBottom = 0;
+          chart1.legend = new am4charts.Legend();
+          //chart.legend.useDefaultMarker = true;
+          chart1.legend.maxHeight = 10;
+          var marker = chart1.legend.markers.template.children.getIndex(0);
+          marker.cornerRadius(7, 7, 7, 7);
+          marker.strokeWidth = 2;
+          marker.strokeOpacity = 1;
+          marker.stroke = am4core.color("#ccc");
+
+          /* Create axes */
+          var categoryAxis = chart1.xAxes.push(new am4charts.CategoryAxis());
+          categoryAxis.dataFields.category = "x";
+          categoryAxis.renderer.minGridDistance = 100;
+
+          /* Create value axis */
+          var valueAxis = chart1.yAxes.push(new am4charts.ValueAxis());
+
+
+          /* Create series */
+          var columnSeries = chart1.series.push(new am4charts.ColumnSeries());
+          columnSeries.name = "Original";
+          columnSeries.dataFields.valueY = "y1";
+          columnSeries.dataFields.categoryX = "x";
+          columnSeries.dataFields.valueZ = "z";
+
+          columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Original Data:{valueY}[/] [#fff]{additional}[/]\n[/][#fff font-size: 15px]Season:{valueZ}[/] [#fff]{additional}[/]"
+          columnSeries.columns.template.propertyFields.fillOpacity = "fillOpacity";
+          columnSeries.columns.template.propertyFields.stroke = "stroke";
+          columnSeries.columns.template.propertyFields.strokeWidth = "strokeWidth";
+          columnSeries.columns.template.propertyFields.strokeDasharray = "columnDash";
+          columnSeries.tooltip.label.textAlign = "middle";
+
+          var lineSeries = chart1.series.push(new am4charts.LineSeries());
+          lineSeries.name = algo;
+          lineSeries.dataFields.valueY = "y2";
+          lineSeries.dataFields.categoryX = "x";
+          lineSeries.dataFields.valueZ = "z";
+
+          lineSeries.stroke = am4core.color("#fdd400");
+          lineSeries.strokeWidth = 1;
+          lineSeries.propertyFields.strokeDasharray = "lineDash";
+          lineSeries.tooltip.label.textAlign = "middle";
+
+          var bullet = lineSeries.bullets.push(new am4charts.Bullet());
+          bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+          bullet.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Algorithm Data:{valueY}[/] [#fff]{additional}[/]\n[/][#fff font-size: 15px]Season:{valueZ}[/] [#fff]{additional}[/]"
+          var circle = bullet.createChild(am4core.Circle);
+          circle.radius = 2;
+          circle.fill = am4core.color("#fff");
+          circle.strokeWidth = 2;
+
+          chart1.data =  AllSeason;
+
+          //chart 2
+
+          var chart2 = am4core.create("graph2", am4charts.XYChart);
+          chart2.exporting.menu = new am4core.ExportMenu();
+          var data = graphDataPOMRB;
+
+          var title = chart2.titles.create();
+          title.text = "POMRB";
+          title.fontSize = 15;
+          title.fontWeight = 600  
+          title.marginBottom = 0;
+          /*Legend*/
+          chart2.legend = new am4charts.Legend();
+         // chart.legend.useDefaultMarker = true;
+         chart2.legend.maxHeight = 10;
+          var marker = chart2.legend.markers.template.children.getIndex(0);
+          marker.cornerRadius(7, 7, 7, 7);
+          marker.strokeWidth = 2;
+          marker.strokeOpacity = 1;
+          marker.stroke = am4core.color("#ccc");
+
+          /* Create axes */
+          var categoryAxis = chart2.xAxes.push(new am4charts.CategoryAxis());
+          categoryAxis.dataFields.category = "x";
+          categoryAxis.renderer.minGridDistance = 100;
+
+          /* Create value axis */
+          var valueAxis = chart2.yAxes.push(new am4charts.ValueAxis());
+
+
+          /* Create series */
+          var columnSeries = chart2.series.push(new am4charts.ColumnSeries());
+          columnSeries.name = "Original";
+          columnSeries.dataFields.valueY = "y1";
+          columnSeries.dataFields.categoryX = "x";
+          columnSeries.dataFields.valueZ = "z";
+
+          columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Original Data:{valueY}[/] [#fff]{additional}[/]"
+          columnSeries.columns.template.propertyFields.fillOpacity = "fillOpacity";
+          columnSeries.columns.template.propertyFields.stroke = "stroke";
+          columnSeries.columns.template.propertyFields.strokeWidth = "strokeWidth";
+          columnSeries.columns.template.propertyFields.strokeDasharray = "columnDash";
+          columnSeries.tooltip.label.textAlign = "middle";
+
+          var lineSeries = chart2.series.push(new am4charts.LineSeries());
+          lineSeries.name = algo;
+          lineSeries.dataFields.valueY = "y2";
+          lineSeries.dataFields.categoryX = "x";
+          lineSeries.dataFields.valueZ = "z";
+
+          lineSeries.stroke = am4core.color("#fdd400");
+          lineSeries.strokeWidth = 2;
+          lineSeries.propertyFields.strokeDasharray = "lineDash";
+          lineSeries.tooltip.label.textAlign = "middle";
+
+          var bullet = lineSeries.bullets.push(new am4charts.Bullet());
+          bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+          bullet.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Algorithm Data:{valueY}[/] [#fff]{additional}[/]"
+          var circle = bullet.createChild(am4core.Circle);
+          circle.radius = 3;
+          circle.fill = am4core.color("#fff");
+          circle.strokeWidth = 2;
+
+          chart2.data =  graphDataPOMRB;
+
+          //chart 3
+          var chart3 = am4core.create("graph3", am4charts.XYChart);
+          chart3.exporting.menu = new am4core.ExportMenu();
+
+          var title = chart3.titles.create();
+          title.text = "MONSOON";
+          title.fontSize = 15;
+          title.fontWeight = 600  
+          title.marginBottom = 0;
+
+          var data = graphDataMONSOON;
+          /*Legend*/
+          chart3.legend = new am4charts.Legend();
+         // chart.legend.useDefaultMarker = true;
+         chart3.legend.maxHeight = 10;
+          var marker = chart3.legend.markers.template.children.getIndex(0);
+          marker.cornerRadius(7, 7, 7, 7);
+          marker.strokeWidth = 2;
+          marker.strokeOpacity = 1;
+          marker.stroke = am4core.color("#ccc");
+
+          /* Create axes */
+          var categoryAxis = chart3.xAxes.push(new am4charts.CategoryAxis());
+          categoryAxis.dataFields.category = "x";
+          categoryAxis.renderer.minGridDistance = 100;
+
+          /* Create value axis */
+          var valueAxis = chart3.yAxes.push(new am4charts.ValueAxis());
+
+
+          /* Create series */
+          var columnSeries = chart3.series.push(new am4charts.ColumnSeries());
+          columnSeries.name = "Original";
+          columnSeries.dataFields.valueY = "y1";
+          columnSeries.dataFields.categoryX = "x";
+          columnSeries.dataFields.valueZ = "z";
+
+          columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Original Data:{valueY}[/] [#fff]{additional}[/]"
+          columnSeries.columns.template.propertyFields.fillOpacity = "fillOpacity";
+          columnSeries.columns.template.propertyFields.stroke = "stroke";
+          columnSeries.columns.template.propertyFields.strokeWidth = "strokeWidth";
+          columnSeries.columns.template.propertyFields.strokeDasharray = "columnDash";
+          columnSeries.tooltip.label.textAlign = "middle";
+
+          var lineSeries = chart3.series.push(new am4charts.LineSeries());
+          lineSeries.name = algo;
+          lineSeries.dataFields.valueY = "y2";
+          lineSeries.dataFields.categoryX = "x";
+          lineSeries.dataFields.valueZ = "z";
+
+          lineSeries.stroke = am4core.color("#fdd400");
+          lineSeries.strokeWidth = 2;
+          lineSeries.propertyFields.strokeDasharray = "lineDash";
+          lineSeries.tooltip.label.textAlign = "middle";
+
+          var bullet = lineSeries.bullets.push(new am4charts.Bullet());
+          bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+          bullet.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Algorithm Data:{valueY}[/] [#fff]{additional}[/]"
+          var circle = bullet.createChild(am4core.Circle);
+          circle.radius = 3;
+          circle.fill = am4core.color("#fff");
+          circle.strokeWidth = 2;
+
+          chart3.data =  graphDataMONSOON;
+
+          //chart 4
+          var chart4 = am4core.create("graph4", am4charts.XYChart);
+          chart4.exporting.menu = new am4core.ExportMenu();
+
+          var title = chart4.titles.create();
+          title.text = "PREMON";
+          title.fontSize = 15;
+          title.fontWeight = 600  
+          title.marginBottom = 0;
+          var data = graphDataPREMON;
+          /*Legend*/
+          chart4.legend = new am4charts.Legend();
+         // chart.legend.useDefaultMarker = true;
+         chart4.legend.maxHeight = 10;
+          var marker = chart4.legend.markers.template.children.getIndex(0);
+          marker.cornerRadius(7, 7, 7, 7);
+          marker.strokeWidth = 2;
+          marker.strokeOpacity = 1;
+          marker.stroke = am4core.color("#ccc");
+
+          /* Create axes */
+          var categoryAxis = chart4.xAxes.push(new am4charts.CategoryAxis());
+          categoryAxis.dataFields.category = "x";
+          categoryAxis.renderer.minGridDistance = 100;
+
+          /* Create value axis */
+          var valueAxis = chart4.yAxes.push(new am4charts.ValueAxis());
+
+
+          /* Create series */
+          var columnSeries = chart4.series.push(new am4charts.ColumnSeries());
+          columnSeries.name = "Original";
+          columnSeries.dataFields.valueY = "y1";
+          columnSeries.dataFields.categoryX = "x";
+          columnSeries.dataFields.valueZ = "z";
+
+          columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Original Data:{valueY}[/] [#fff]{additional}[/]"
+          columnSeries.columns.template.propertyFields.fillOpacity = "fillOpacity";
+          columnSeries.columns.template.propertyFields.stroke = "stroke";
+          columnSeries.columns.template.propertyFields.strokeWidth = "strokeWidth";
+          columnSeries.columns.template.propertyFields.strokeDasharray = "columnDash";
+          columnSeries.tooltip.label.textAlign = "middle";
+
+          var lineSeries = chart4.series.push(new am4charts.LineSeries());
+          lineSeries.name = algo;
+          lineSeries.dataFields.valueY = "y2";
+          lineSeries.dataFields.categoryX = "x";
+          lineSeries.dataFields.valueZ = "z";
+
+          lineSeries.stroke = am4core.color("#fdd400");
+          lineSeries.strokeWidth = 2;
+          lineSeries.propertyFields.strokeDasharray = "lineDash";
+          lineSeries.tooltip.label.textAlign = "middle";
+
+          var bullet = lineSeries.bullets.push(new am4charts.Bullet());
+          bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+          bullet.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Algorithm Data:{valueY}[/] [#fff]{additional}[/]"
+          var circle = bullet.createChild(am4core.Circle);
+          circle.radius = 3;
+          circle.fill = am4core.color("#fff");
+          circle.strokeWidth = 2;
+
+          chart4.data =  graphDataPREMON;
+
+          //chart 5
+
+          var chart5 = am4core.create("graph5", am4charts.XYChart);
+          chart5.exporting.menu = new am4core.ExportMenu();
+          var data = graphDataPOMKH;
+
+          var title = chart5.titles.create();
+          title.text = "POMKH";
+          title.fontSize = 15;
+          title.fontWeight = 600  
+          title.marginBottom = 0;
+          /*Legend*/
+          chart5.legend = new am4charts.Legend();
+         // chart.legend.useDefaultMarker = true;
+          chart5.legend.maxHeight = 10;
+          var marker = chart5.legend.markers.template.children.getIndex(0);
+          marker.cornerRadius(4, 4, 4, 4);
+          marker.strokeWidth = 2;
+          marker.strokeOpacity = 1;
+          marker.stroke = am4core.color("#ccc");
+
+
+          /* Create axes */
+          var categoryAxis = chart5.xAxes.push(new am4charts.CategoryAxis());
+          categoryAxis.dataFields.category = "x";
+          categoryAxis.renderer.minGridDistance = 100;
+
+          /* Create value axis */
+          var valueAxis = chart5.yAxes.push(new am4charts.ValueAxis());
+
+
+          /* Create series */
+          var columnSeries = chart5.series.push(new am4charts.ColumnSeries());
+          columnSeries.name = "Original";
+          columnSeries.dataFields.valueY = "y1";
+          columnSeries.dataFields.categoryX = "x";
+          columnSeries.dataFields.valueZ = "z";
+
+          columnSeries.columns.template.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Original Data:{valueY}[/] [#fff]{additional}[/]"
+          columnSeries.columns.template.propertyFields.fillOpacity = "fillOpacity";
+          columnSeries.columns.template.propertyFields.stroke = "stroke";
+          columnSeries.columns.template.propertyFields.strokeWidth = "strokeWidth";
+          columnSeries.columns.template.propertyFields.strokeDasharray = "columnDash";
+          columnSeries.tooltip.label.textAlign = "middle";
+
+          var lineSeries = chart5.series.push(new am4charts.LineSeries());
+          lineSeries.name = algo;
+          lineSeries.dataFields.valueY = "y2";
+          lineSeries.dataFields.categoryX = "x";
+          lineSeries.dataFields.valueZ = "z";
+
+          lineSeries.stroke = am4core.color("#fdd400");
+          lineSeries.strokeWidth = 2;
+          lineSeries.propertyFields.strokeDasharray = "lineDash";
+          lineSeries.tooltip.label.textAlign = "middle";
+
+          var bullet = lineSeries.bullets.push(new am4charts.Bullet());
+          bullet.fill = am4core.color("#fdd400"); // tooltips grab fill from parent by default
+          bullet.tooltipText = "[#fff font-size: 15px]Date:{categoryX}\n[/][#fff font-size: 15px]Algorithm Data:{valueY}[/] [#fff]{additional}[/]"
+          var circle = bullet.createChild(am4core.Circle);
+          circle.radius = 3;
+          circle.fill = am4core.color("#fff");
+          circle.strokeWidth = 2;
+
+          chart5.data =  graphDataPOMKH;
+
+          });
+      }
+      /*************** STOP SHWETA SECTION **********************/
+
+      /*************** START YASH SECTION **********************/
+      function processJSON() {
+        improvingRegionCount = 0;
+        decliningRegionCount = 0;
+        if (level == 1) {
+          //console.log("Working Level 1");
+          var t = docIdx;
+          var obj = JSON.parse(locFileData);
+          var temp = Object.keys(obj);
+
+          var district_names = [];
+          for (var i = 1; i < temp.length - 1; i++) {
+            if (!temp[i].includes('_')) {
+              district_names.push(temp[i]);
+            }
+          }
+          /*for(var i in district_names)
+            {
+              console.log(district_names[i]);
+            }*/
+          //console.log(obj["Anand_ARIMA"][91]);
+
+          var dict = {};
+          for (var i = 1; i < district_names.length; i++) {
+            var meth = district_names[i] + '_' + algo;
+            try {
+              if (obj[district_names[i]][t] <= obj[meth][t]) {
+                //console.log("Value",obj[states[i]][t]);
+                //console.log("Benchmark",obj[meth][t]);
+                dict[district_names[i]] = 1;
+              }
+              if (obj[district_names[i]][t] > obj[meth][t]) {
+                //console.log("Value",obj[states[i]][t]);
+                //console.log("Benchmark",obj[meth][t]);
+                dict[district_names[i]] = 0;
+              }
+            } catch (err) {
+              console.log('No data for :', meth);
+            }
+          }
+          //console.log(dict);
+          //console.log(states_names);
+          for (var key in dict) {
+            //console.log(key);
+            st = document.getElementById(key);
+            //console.log(key);
+            try {
+              if (dict[key] == 1) {
+                //console.log("Coloring level 1 green");
+                st.style.fill = '#ABEBC6';
+                improvingRegionCount += 1;
+              }
+              if (dict[key] == 0) {
+                //console.log("Coloring level 1 red");
+                st.style.fill = '#F5B7B1';
+                decliningRegionCount += 1;
+              }
+            } catch (err) {
+              console.log(key, 'NOT FOUND');
+            }
+          }
+        } else {
+          //console.log("Working Level 0");
+          var t = docIdx.toString();
+          var obj = JSON.parse(locFileData);
+          var temp = Object.keys(obj);
+          var states_names = [];
+          for (var i = 2; i < temp.length; i++) {
+            if (
+              !temp[i].includes('_') &&
+              temp[i] != 'MN' &&
+              temp[i] != 'NL' &&
+              temp[i] != 'AN'
+            ) {
+              states_names.push(temp[i]);
+            }
+          }
+          //console.log(states_names);
+          var dict = {};
+          for (var i = 0; i < states_names.length; i++) {
+            //console.log(states[i]);
+            var meth = states_names[i] + '_' + algo;
+            if (obj[states_names[i]][t] <= obj[meth][t]) {
+              //console.log('Value', obj[states_names[i]][t]);
+              //console.log('Ref', obj[meth][t]);
+              dict[states_names[i]] = 1;
+            }
+            if (obj[states_names[i]][t] > obj[meth][t]) {
+              //console.log('Value', obj[states_names[i]][t]);
+              //console.log('Ref', obj[meth][t]);
+              dict[states_names[i]] = 0;
+            }
+          }
+          //console.log(dict);
+          //console.log(states_names);
+          for (var key in dict) {
+            st = document.getElementById(key);
+            //console.log(key);
+            if (dict[key] == 1) {
+              //console.log(key);
+              //console.log("Coloring level 0 green");
+              st.style.fill = '#ABEBC6';
+              improvingRegionCount += 1;
+            }
+            if (dict[key] == 0) {
+              //console.log(key);
+              //console.log("Coloring level 0 red");
+              st.style.fill = '#F5B7B1';
+              decliningRegionCount += 1;
+            }
+          }
+          var ldk = document.getElementById('LD');
+          ldk.style.fill = document.getElementById('JK').style.fill;
+        }
+        var improvingRegions = document.getElementsByClassName(
+          'improvingRegions'
+        );
+        for (var i = 0; i < improvingRegions.length; i++) {
+          improvingRegions[i].innerHTML = improvingRegionCount.toString();
+        }
+        var decliningRegions = document.getElementsByClassName(
+          'decliningRegions'
+        );
+        for (var i = 0; i < decliningRegions.length; i++) {
+          decliningRegions[i].innerHTML = decliningRegionCount.toString();
+        }
+      }
+
+      /*************** STOP YASH SECTION **********************/
+
+      /***************ROOT MEAN SQUARE ERROR*****************/
+
+      function rmseCalc(y, ypred) {
+        rmse = 0;
+        for (i = 0; i < y.length; i++) {
+          rmse += Math.pow(y[i] - ypred[i], 2);
+        }
+        rmse /= y.length;
+        rmse = Math.sqrt(rmse);
+        mean = 0;
+        for (i = 0; i < y.length; i++) {
+          mean += y[i];
+        }
+        mean /= y.length;
+        return ((1 - rmse / mean) * 100).toFixed(2);
+      }
+
+      var scores_dict = null;
+
+      function checkAccuracy() {
+        errorFileData = JSON.parse(graphFileData);
+        arr1 = errorFileData[loc];
+        sma_array = errorFileData[loc + '_' + 'SMA'];
+        ewma_array = errorFileData[loc + '_' + 'EWMA'];
+        arima_array = errorFileData[loc + '_' + 'ARIMA'];
+        tes_array = errorFileData[loc + '_' + 'TES'];
+        des_array = errorFileData[loc + '_' + 'DES'];
+        y = [];
+        ypred_sma = [];
+        ypred_ewma = [];
+        ypred_arima = [];
+        ypred_tes = [];
+        ypred_des = [];
+        for (i in arr1) {
+          y.push(arr1[i]);
+          ypred_sma.push(sma_array[i]);
+          ypred_ewma.push(ewma_array[i]);
+          ypred_arima.push(arima_array[i]);
+          ypred_tes.push(tes_array[i]);
+          ypred_des.push(des_array[i]);
+        }
+        y = y.slice(5, docIdx);
+        ypred_sma.slice(5, docIdx);
+        ypred_ewma.slice(5, docIdx);
+        ypred_arima.slice(5, docIdx);
+        ypred_tes.slice(5, docIdx);
+        ypred_des.slice(5, docIdx);
+        scores_dict = {
+          sma: rmseCalc(y, ypred_sma),
+          ewma: rmseCalc(y, ypred_ewma),
+          arima: rmseCalc(y, ypred_arima),
+          tes: rmseCalc(y, ypred_tes),
+          des: rmseCalc(y, ypred_des),
+        };
+      }
+      /**************END ROOT MEAN SQUARE ERROR**************/
+
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            includedLanguages: 'bn,gu,hi,kn,ml,mr,or,sd,ta,te,ur',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          'google_translate_element'
+        );
+      }
+    </script>
+  </body>
+</html>
